@@ -49,8 +49,6 @@ namespace UnityGAS
 
         public bool TryActivateAbility(AbilityDefinition ability, GameObject target = null)
         {
-            Debug.Log("TryActivateAbility called for: " + ability.abilityName + " " + target.name);
-
             if (ability == null || isCasting || IsOnCooldown(ability) || !ability.CanActivate(gameObject, target))
             {
                 return false;
