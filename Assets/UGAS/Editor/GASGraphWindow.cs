@@ -98,20 +98,17 @@ namespace UnityGAS
                 connections.Add(new GraphConnection(abilityNode, effectNode));
 
                 // Attribute Nodes
-                AttributeDefinition targetAttribute = null;
-                if (effect is InstantModifierEffect ime) targetAttribute = ime.attribute;
-                if (effect is DurationModifierEffect dme) targetAttribute = dme.attribute;
-
-                if (targetAttribute != null)
+                foreach (var mod in effect.modifiers)
                 {
-                    var existingAttrNode = nodes.FirstOrDefault(n => n.Asset == targetAttribute);
+                    if (mod.attribute == null) continue;
+                    var existingAttrNode = nodes.FirstOrDefault(n => n.Asset == mod.attribute);
                     if (existingAttrNode != null)
                     {
                         connections.Add(new GraphConnection(effectNode, existingAttrNode));
                     }
                     else
                     {
-                        var attrNode = new GraphNode(targetAttribute, new Rect(650, 100 + i * 100, 200, 50), NodeType.Attribute);
+                        var attrNode = new GraphNode(mod.attribute, new Rect(650, 100 + i * 100, 200, 50), NodeType.Attribute);
                         nodes.Add(attrNode);
                         connections.Add(new GraphConnection(effectNode, attrNode));
                     }

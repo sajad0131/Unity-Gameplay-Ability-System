@@ -17,24 +17,50 @@ namespace UnityGAS
 
             EditorGUILayout.Space();
 
-            EditorGUILayout.LabelField("Configuration", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Duration", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(serializedObject.FindProperty("duration"));
-            if (serializedObject.FindProperty("duration").floatValue > 0)
-            {
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("canStack"));
-                if (serializedObject.FindProperty("canStack").boolValue)
-                {
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("maxStacks"));
-                }
-            }
-
-            // Draw properties specific to the derived classes (e.g., InstantModifierEffect)
-            DrawPropertiesExcluding(serializedObject, "m_Script", "effectName", "icon", "description", "duration", "canStack", "maxStacks", "grantedTags");
 
             EditorGUILayout.Space();
 
-            EditorGUILayout.LabelField("Tags", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Periodic", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("isPeriodic"));
+            if (serializedObject.FindProperty("isPeriodic").boolValue)
+            {
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("period"));
+                if (target is PeriodicModifierEffect)
+                {
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("revertOnRemove"));
+                }
+            }
+
+            EditorGUILayout.Space();
+
+            EditorGUILayout.LabelField("Stacking", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("canStack"));
+            if (serializedObject.FindProperty("canStack").boolValue)
+            {
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("maxStacks"));
+            }
+
+            EditorGUILayout.Space();
+
+            EditorGUILayout.LabelField("Modifiers", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("modifiers"), true);
+
+            EditorGUILayout.Space();
+
+            EditorGUILayout.LabelField("Gameplay Cues", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("cues"), true);
+
+            EditorGUILayout.Space();
+
+            EditorGUILayout.LabelField("Effect Tags", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(serializedObject.FindProperty("grantedTags"), true);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("ongoingTags"), true);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("applicationRequiredTags"), true);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("applicationBlockedByTags"), true);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("removeOnApplicationTags"), true);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("removeOnRemoveTags"), true);
 
             serializedObject.ApplyModifiedProperties();
         }

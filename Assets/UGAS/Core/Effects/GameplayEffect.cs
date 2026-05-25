@@ -11,21 +11,35 @@ namespace UnityGAS
         public Sprite icon;
 
         [Header("Duration")]
-        public float duration = 0f; // 0 for instant
+        public float duration = 0f;
+
+        [Header("Periodic")]
+        public bool isPeriodic = false;
+        public float period = 1f;
 
         [Header("Stacking")]
         public bool canStack = false;
         public int maxStacks = 1;
 
-        [Header("Granted Tags")]
-        public List<GameplayTag> grantedTags = new List<GameplayTag>();
+        [Header("Modifiers")]
+        public List<ModifierOverride> modifiers = new List<ModifierOverride>();
 
-        // Properties
-        public bool IsInstant => duration <= 0f;
-        public bool IsDuration => duration > 0f;
+        [Header("Cues")]
+        public List<GameplayCue> cues = new List<GameplayCue>();
+
+        [Header("Tags")]
+        public List<GameplayTag> grantedTags = new List<GameplayTag>();
+        public List<GameplayTag> ongoingTags = new List<GameplayTag>();
+        public List<GameplayTag> removeOnApplicationTags = new List<GameplayTag>();
+        public List<GameplayTag> removeOnRemoveTags = new List<GameplayTag>();
+        public List<GameplayTag> applicationRequiredTags = new List<GameplayTag>();
+        public List<GameplayTag> applicationBlockedByTags = new List<GameplayTag>();
+
+        public bool IsInfinite => duration < 0f;
+        public bool IsInstant => duration <= 0f && !isPeriodic && !IsInfinite;
+        public bool IsDuration => duration > 0f || isPeriodic || IsInfinite;
 
         public abstract void Apply(GameObject target, GameObject instigator, int stackCount = 1);
         public abstract void Remove(GameObject target, GameObject instigator);
-
     }
 }

@@ -17,10 +17,11 @@ namespace UnityGAS
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Runtime Info", EditorStyles.boldLabel);
 
-            bool isCasting = (bool)GetInstanceField(abilitySystem, "isCasting");
-            if (isCasting)
+            object isCastingObj = GetInstanceField(abilitySystem, "isCasting");
+            if (isCastingObj is bool isCasting && isCasting)
             {
                 var currentCast = (AbilityDefinition)GetInstanceField(abilitySystem, "currentCast");
+                if (currentCast == null) return;
                 float castProgress = (float)abilitySystem.GetType().GetProperty("CastProgress", BindingFlags.Public | BindingFlags.Instance).GetValue(abilitySystem);
 
                 EditorGUILayout.LabelField("Casting:", currentCast.name);
@@ -28,6 +29,7 @@ namespace UnityGAS
             }
 
             var cooldowns = (System.Collections.IDictionary)GetInstanceField(abilitySystem, "cooldowns");
+            if (cooldowns == null) return;
             EditorGUILayout.LabelField("Cooldowns", EditorStyles.boldLabel);
             foreach (System.Collections.DictionaryEntry entry in cooldowns)
             {

@@ -25,6 +25,7 @@ namespace UnityGAS
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("canCastWhileMoving"));
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("interruptible"));
             }
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("maxLevel"));
 
             EditorGUILayout.Space();
 

@@ -31,6 +31,7 @@ namespace UnityGAS
         public float castTime = 0f;
         public bool canCastWhileMoving = true;
         public bool interruptible = true;
+        public int maxLevel = 1;
 
         [Header("Cost")]
         public float cost = 0f;

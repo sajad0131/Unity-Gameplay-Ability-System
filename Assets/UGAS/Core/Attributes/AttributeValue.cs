@@ -9,8 +9,17 @@ namespace UnityGAS
     public class AttributeValue
     {
         public AttributeDefinition Definition { get; }
-        public float BaseValue { get; set; }
+        public float BaseValue
+        {
+            get => baseValue;
+            set
+            {
+                baseValue = value;
+                RecalculateValue();
+            }
+        }
         public float CurrentValue { get; private set; }
+        [SerializeField] private float baseValue;
 
         private readonly List<AttributeModifier> modifiers = new List<AttributeModifier>();
         private float lastDamageTime;
@@ -20,7 +29,7 @@ namespace UnityGAS
         public AttributeValue(AttributeDefinition definition)
         {
             Definition = definition;
-            BaseValue = definition.defaultBaseValue;
+            baseValue = definition.defaultBaseValue;
             RecalculateValue();
         }
 
@@ -60,7 +69,7 @@ namespace UnityGAS
             {
                 if (Time.time - lastDamageTime >= Definition.regenerationDelay)
                 {
-                    BaseValue += Definition.regenerationRate * deltaTime;
+                    baseValue += Definition.regenerationRate * deltaTime;
                     needsRecalculate = true;
                 }
             }

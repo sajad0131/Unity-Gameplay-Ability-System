@@ -2,13 +2,22 @@ namespace UnityGAS
 {
     public enum ModifierType
     {
-        /// <summary>
-        /// Adds a flat value to the attribute.
-        /// </summary>
         Flat,
-        /// <summary>
-        /// Adds a percentage of the attribute's base value.
-        /// </summary>
         Percent
+    }
+
+    [System.Serializable]
+    public struct ModifierOverride
+    {
+        public AttributeDefinition attribute;
+        public ModifierType type;
+        public float value;
+
+        public ModifierOverride(AttributeDefinition attribute, ModifierType type, float value)
+        {
+            this.attribute = attribute;
+            this.type = type;
+            this.value = value;
+        }
     }
 }
