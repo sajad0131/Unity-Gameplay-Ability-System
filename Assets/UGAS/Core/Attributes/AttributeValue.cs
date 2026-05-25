@@ -9,7 +9,8 @@ namespace UnityGAS
     public class AttributeValue
     {
         public AttributeDefinition Definition { get; }
-        public float BaseValue { get; set; }
+        private float baseValue;
+        public float BaseValue { get{ return baseValue; } set { baseValue = value; RecalculateValue(); } }
         public float CurrentValue { get; private set; }
 
         private readonly List<AttributeModifier> modifiers = new List<AttributeModifier>();
