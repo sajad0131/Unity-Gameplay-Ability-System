@@ -57,9 +57,7 @@ namespace UnityGAS
 
         public bool TryActivateAbility(AbilityDefinition ability, GameObject target = null)
         {
-            if (ability == null) return false;
-
-            if (isCasting)
+            if (ability == null || isCasting || IsOnCooldown(ability) || !ability.CanActivate(gameObject, target))
             {
                 abilityQueue.Enqueue(new QueuedAbility(ability, target));
                 return true;
